@@ -230,6 +230,9 @@
         // show week numbers at head of row
         showWeekNumber: false,
 
+        // Show clear dates button
+        showClearDates: false,
+        
         // Week picker mode
         pickWholeWeek: false,
 
@@ -241,6 +244,9 @@
 
         startRange: null,
         endRange: null,
+        
+        // Used to attache another Pikaday object/instance.
+        secondPikaObject: null,
 
         isRTL: false,
 
@@ -273,6 +279,7 @@
         i18n: {
             previousMonth : 'Previous Month',
             nextMonth     : 'Next Month',
+            clearDate     : 'Clear dates',
             months        : ['January','February','March','April','May','June','July','August','September','October','November','December'],
             weekdays      : ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
             weekdaysShort : ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
@@ -405,6 +412,12 @@
         }
         return '<thead><tr>' + (opts.isRTL ? arr.reverse() : arr).join('') + '</tr></thead>';
     },
+        
+    renderFooter = function (opts) {
+        const arr = [];
+        arr.push('<bouton class="pika-clear-dates">' + opts.i18n.clearDates + '</bouton>');
+        return '<div class="pika-clear-dates-wrapper">' + (opts.isRTL ? arr.reverse() : arr).join('') + '</div>';
+    },        
 
     renderTitle = function(instance, c, year, month, refYear, randId)
     {
@@ -508,6 +521,16 @@
                 }
                 else if (hasClass(target, 'pika-next')) {
                     self.nextMonth();
+                } 
+                else if (hasClass(target, 'pika-clear-dates')) {
+                    self._o.secondPikaObject.clear();
+                    self._o.secondPikaObject.setStartRange(null);
+                    self._o.secondPikaObject.setEndRange(null);
+                    self._o.secondPikaObject.draw();
+                    self.clear();
+                    self.setStartRange(null);
+                    self.setEndRange(null);
+                    self.draw();
                 }
             }
             if (!hasClass(target, 'pika-select')) {
@@ -1046,6 +1069,10 @@
             for (var c = 0; c < opts.numberOfMonths; c++) {
                 randId = 'pika-title-' + Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 2);
                 html += '<div class="pika-lendar">' + renderTitle(this, c, this.calendars[c].year, this.calendars[c].month, this.calendars[0].year, randId) + this.render(this.calendars[c].year, this.calendars[c].month, randId) + '</div>';
+            }
+            
+            if (opts.showClearDates) {
+                html += renderFooter(opts);
             }
 
             this.el.innerHTML = html;
