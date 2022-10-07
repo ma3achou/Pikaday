@@ -224,6 +224,20 @@ http://nicolasgallagher.com/micro-clearfix-hack/
     border-radius: 3px;
 }
 
+.pika-clear-dates-wrapper {
+    padding: 0 15px 10px;
+    text-align: right;
+    width: 100%;
+}
+
+.pika-clear-dates {
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: bold;
+    color:red;
+    cursor: pointer;
+}
+
 /* styling for abbr */
 .pika-table abbr {
     border-bottom: none;
