@@ -260,3 +260,17 @@ $pd-border-radius: 3px !default;
     box-shadow: none;
     border-radius: $pd-border-radius;
 }
+
+.pika-clear-dates-wrapper {
+    padding: 0 15px 10px;
+    text-align: right;
+    width: 100%;
+}
+
+.pika-clear-dates {
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: bold;
+    color:red;
+    cursor: pointer;
+}
